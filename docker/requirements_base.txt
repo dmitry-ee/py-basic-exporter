@@ -1,0 +1,6 @@
+asyncio
+kafka-python
+websockets
+json_log_formatter
+ujson
+configparser
