@@ -14,4 +14,7 @@ build:
 push:
 	docker push $(DOCKER_ID_USER)/$(APP_NAME):$(APP_VERSION)
 
+run:
+	docker run --rm $(DOCKER_ID_USER)/$(APP_NAME):$(APP_VERSION)
+
 publish: build push

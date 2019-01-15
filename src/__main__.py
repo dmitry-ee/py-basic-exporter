@@ -4,8 +4,13 @@ import sys
 import os
 import json_log_formatter
 import ujson
-import configparser
 import asyncio
+import yaml
+
+import importdir
+importdir.do("lib", globals())
+
+import flatten_dict
 # ##
 
 # logging settings
@@ -28,19 +33,39 @@ LOGGER.info("LOGGER INITIALIZED")
 # ##
 
 # config settings
-CONFIG = configparser.ConfigParser()
-CONFIG.read("config.yml")
-print(CONFIG.__dict__)
+def underscore_reducer(k1, k2):
+    if k1 is None:
+       return k2.upper().replace(".", "_")
+    else:
+       return (k1 + "_" + k2).upper().replace(".", "_")
+
+def underscore_splitter(flat_key):
+    return flat_key.lower().split("_")
+
+
+try:
+    with open("config.yml", 'r') as ymlfile:
+        CONFIG = flatten_dict.flatten(yaml.load(ymlfile), reducer=underscore_reducer)
+    LOGGER.warning("got default config: %s" % CONFIG)
+    if len(os.environ) != 0:
+        #LOGGER.warning("overriding default config with ENV")
+        for env_var in os.environ:
+            CONFIG[env_var] = os.environ.get(env_var)
+        LOGGER.warning("result config: %s" % CONFIG)
+
+except Exception as e:
+    LOGGER.warning(e)
+    LOGGER.warning("using empty config")
+    CONFIG = {}
 # ##
 
 try:
-    from app import App
 
-    application = App()
+    import app
 
     if __name__ == "__main__":
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(application.run())
+        loop.run_until_complete(app.run(flatten_dict.unflatten(CONFIG, splitter=underscore_splitter)))
 
 except Exception as e:
     LOGGER.exception(e)

@@ -1,8 +1,7 @@
 import logging
 
-class App():
-    def __init__(self):
-        self.logger = logging.getLogger()
+logger = logging.getLogger()
 
-    async def run(self):
-        self.logger.warn("APP:run -> NOT IMPLEMENTED!")
+async def run(config):
+
+    logger.warn("APP:run -> NOT IMPLEMENTED!")
