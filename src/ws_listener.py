@@ -6,8 +6,8 @@ class WSListener(Callback):
 
     ws_url = ""
 
-    def __init__(self, ws_url="", logger=None):
-        super().__init__("WSS", logger=logger)
+    def __init__(self, ws_url=""):
+        super().__init__("WSS")
         self.ws_url = ws_url
 
     async def run(self):

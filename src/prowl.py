@@ -13,8 +13,8 @@ class Prowl(Callback):
     alert_level_1   = 0
     alert_level_2   = None
 
-    def __init__(self, app_name, api_key, logger=None, alert_level_1=0, alert_level_2=None):
-        super().__init__("Prowl", objectType=Tick, logger=logger)
+    def __init__(self, app_name, api_key, alert_level_1=0, alert_level_2=None):
+        super().__init__("Prowl", objectType=Tick)
         self.api_key            = api_key
         self.app_name           = app_name
         self.api_initialized    = False

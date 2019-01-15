@@ -11,8 +11,8 @@ class TickBuilder(Callback):
     symbol2             = None
     min_export_amount   = 0
 
-    def __init__(self, symbol1, symbol2, logger=None, min_export_amount=0):
-        super().__init__("TickBuilder", objectType=Tick, logger=logger)
+    def __init__(self, symbol1, symbol2, min_export_amount=0):
+        super().__init__("TickBuilder", objectType=Tick)
         self.symbol1 = symbol1.lower()
         self.symbol2 = symbol2.lower()
         self.min_export_amount = min_export_amount
