@@ -5,4 +5,4 @@ class App():
         self.logger = logging.getLogger()
 
     async def run(self):
-        self.logger.warn("APP:run")
+        self.logger.warn("APP:run -> NOT IMPLEMENTED!")
