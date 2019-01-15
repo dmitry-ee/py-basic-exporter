@@ -7,7 +7,7 @@ ARG         DOCKER_DIR=./docker/
 RUN         mkdir /install
 WORKDIR     /install
 
-COPY        ${DOCKER_DIR}requirements_base.txt /requirements.txt
+COPY        ${DOCKER_DIR}requirements.txt /requirements.txt
 RUN         set -ex ;\
             apk add gcc musl-dev ;\
             pip install --no-cache-dir --install-option="--prefix=/install" -r /requirements.txt
