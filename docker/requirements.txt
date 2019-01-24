@@ -6,3 +6,5 @@ ujson
 configparser
 pyyaml
 flatten-dict
+munch
+requests

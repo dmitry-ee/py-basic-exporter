@@ -1,16 +1,9 @@
 # imports
-import logging
-import sys
-import os
-import json_log_formatter
-import ujson
-import asyncio
-import yaml
+import logging, sys, os, json_log_formatter, ujson, asyncio, yaml, flatten_dict
+from munch import Munch
 
 import importdir
 importdir.do("lib", globals())
-
-import flatten_dict
 # ##
 
 # logging settings
@@ -18,7 +11,7 @@ LOGGER = logging.getLogger()
 
 if "LOG_LEVEL" in os.environ:
     LOGGER.setLevel(logging.getLevelName(os.environ.get("LOG_LEVEL")))
-    LOGGER.warn("setting log level to %s" % os.environ.get("LOG_LEVEL"))
+    LOGGER.warning("setting log level to %s" % os.environ.get("LOG_LEVEL"))
 else:
     LOGGER.setLevel(logging.WARN)
 
@@ -63,9 +56,11 @@ try:
 
     import app
 
+    CONFIG = Munch.fromDict(flatten_dict.unflatten(CONFIG, splitter=underscore_splitter))
+
     if __name__ == "__main__":
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(app.run(flatten_dict.unflatten(CONFIG, splitter=underscore_splitter)))
+        loop.run_until_complete(app.run(CONFIG))
 
 except Exception as e:
     LOGGER.exception(e)
