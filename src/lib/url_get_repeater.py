@@ -15,5 +15,5 @@ class UrlGetRepeater(BasicCallRepeater):
         if self.output_type == "json":
             return get_result.json()
         # more repetitions of if (if necessary)
-        else self.output_type:
+        else:
             return get_result.text
