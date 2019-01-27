@@ -4,8 +4,8 @@ from datetime import datetime
 
 class BasicCallRepeater(Callback):
 
-    def __init__(self, sleep_ms=60000, api=None, repeat_lambda=None):
-        super().__init__(self.__class__.__name__)
+    def __init__(self, repeater_name=None, sleep_ms=60000, api=None, repeat_lambda=None):
+        super().__init__(self.__class__.__name__ if not repeater_name else repeater_name)
 
         self.sleep_seconds = int(sleep_ms)/1000
         self.api = api

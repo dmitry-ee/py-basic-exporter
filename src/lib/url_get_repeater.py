@@ -6,7 +6,7 @@ class UrlGetRepeater(BasicCallRepeater):
     # url to call every sleep_ms
     # output_type could be `json` or `text`
     def __init__(self, url, output_type="json", sleep_ms=60000):
-        super().__init__(sleep_ms=sleep_ms, repeat_lambda=lambda self: self.get(url))
+        super().__init__(sleep_ms=sleep_ms, repeat_lambda=lambda self: self.get(url), repeater_name=self.__class__.__name__ + ":" + url)
         self.output_type = output_type
 
     def get(self, url):
