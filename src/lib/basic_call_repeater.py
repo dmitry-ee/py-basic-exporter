@@ -5,7 +5,7 @@ from datetime import datetime
 class BasicCallRepeater(Callback):
 
     def __init__(self, sleep_ms=60000, api=None, repeat_lambda=None):
-        super().__init__(self.__name__)
+        super().__init__(self.__class__.__name__)
 
         self.sleep_seconds = int(sleep_ms)/1000
         self.api = api
