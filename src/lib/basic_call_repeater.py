@@ -12,7 +12,7 @@ class BasicCallRepeater(Callback):
         self.repeat_lambda = repeat_lambda
 
     async def run(self):
-        self.logger.warning("BasicCallRepeater started!")
+        self.logger.warning("%s started!" % self.name)
 
         if not callable(self.repeat_lambda):
             raise Exception("repeat_lambda is not properly supplied!")
