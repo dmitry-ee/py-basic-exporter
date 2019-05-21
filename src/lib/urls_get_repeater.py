@@ -2,18 +2,22 @@ import requests
 from datetime import datetime
 from basic_call_repeater import BasicCallRepeater
 
-class UrlGetRepeater(BasicCallRepeater):
+class UrlsGetRepeater(BasicCallRepeater):
     # url to call every sleep_ms
     # output_type could be `json` or `text`
-    def __init__(self, url, output_type="json", sleep_ms=60000, headers={}):
+    def __init__(self, urls, output_type="json", sleep_ms=60000, headers={}):
         super().__init__(
             sleep_ms=sleep_ms,
-            repeat_lambda=lambda self: self.get(url),
-            repeater_name=self.__class__.__name__ + ":" + url
+            repeat_lambda=lambda self: self.get_many(urls),
+            repeater_name=self.__class__.__name__ + ":" + str(urls)
         )
         self.headers = headers
         self.output_type = output_type
         self.logger.info("default headers: %s" % str(headers))
+
+    def get_many(self, urls):
+        responses = [self.get(url) for url in urls]
+        return responses
 
     def get(self, url):
         self.logger.info("performing GET request to %s" % url)
