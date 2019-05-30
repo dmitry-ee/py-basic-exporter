@@ -1,6 +1,4 @@
-import websockets
-import asyncio
-import json
+import websockets, asyncio, json, logging
 from callback import Callback
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
@@ -20,10 +18,15 @@ class KafkaCallback(Callback):
         self.type_topic_mapping = type_topic_mapping
         self.default_topic_name = default_topic_name
         self.default_retries    = default_retries
+        self.debug = self.logger.level == logging.DEBUG
 
         self.init()
 
     def init(self):
+        if self.debug:
+            self.logger.warning("KAFKA_CALLBACk -> SETTING ALL LEVEL TO DEBUG")
+            return
+
         try:
             self.producer = KafkaProducer(
                 bootstrap_servers=[self.kafka_url],
@@ -35,7 +38,12 @@ class KafkaCallback(Callback):
             raise e
 
     def processCallback(self, obj):
-        #NOTE: awesome sh*t is going on here
+        # NOTE: awesome debug instead of real kafka
+        if self.debug:
+            self.logger.debug(str(obj))
+            return
+
+        # NOTE: awesome sh*t is going on here
         if type(obj) is str:
             obj = json.loads(obj)
         if type(obj) is list:
