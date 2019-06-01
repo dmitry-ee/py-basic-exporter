@@ -38,7 +38,7 @@ def underscore_splitter(flat_key):
 
 try:
     with open("config.yml", 'r') as ymlfile:
-        CONFIG = flatten_dict.flatten(yaml.load(ymlfile), reducer=underscore_reducer)
+        CONFIG = flatten_dict.flatten(yaml.load(ymlfile, Loader=yaml.SafeLoader), reducer=underscore_reducer)
     LOGGER.warning("got default config: %s" % CONFIG)
     if len(os.environ) != 0:
         #LOGGER.warning("overriding default config with ENV")
